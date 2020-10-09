@@ -3,7 +3,7 @@ import { App, ExpressReceiver } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
 import { useHelloCommand } from "./commands/hello";
 import { slackBot } from "./lib/bot";
-import { githubTrendNotifyToSlack } from "../github/trend";
+import { githubTrendNotifyToSlack } from "../github/notify";
 
 const config = functions.config();
 
