@@ -20,12 +20,13 @@ const app = new App({
 
 const web = new WebClient(config.slack.bot_token);
 
+//slack commandを自作する一例
 useHelloCommand(app);
 
+//スケジューリングで呼ぶ関数を定義
 export const githubTrendNotify = () => {
   const key = config.gcloud.translate.key;
   const channel = "C01C2M6V8AG";
   const bot = new slackBot(web);
   githubTrendNotifyToSlack(key, bot, channel);
 };
-//他のスケジューリングを追加する際は、別の関数を切っていく

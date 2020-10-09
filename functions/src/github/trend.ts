@@ -1,6 +1,6 @@
 import trending from "trending-github";
-import * as translateAPI from "@google-cloud/translate";
 import { slackBot } from "../slack/lib/bot";
+import { translateText } from "../api/translate"
 
 type Repository = {
   name: string;
@@ -18,14 +18,6 @@ export const githubTrendNotifyToSlack = (
   let repos: Repository[] = [];
   const Delimiter = "###";
 
-  const translateText = async (text: string) => {
-    const translate = new translateAPI.v2.Translate({
-      key: key,
-    });
-    const target = "ja";
-    return translate.translate(text, target);
-  };
-
   trending()
     .then((response) => {
       repos = response as Repository[];
@@ -33,9 +25,9 @@ export const githubTrendNotifyToSlack = (
       const descOneLinear = repos
         .map((repo) => repo.description)
         .join(Delimiter);
-      return translateText(descOneLinear);
+      return translateText(key,descOneLinear);
     })
-    .then((value) => {
+    .then((value: string[]) => {
       const translated = value[0].split(Delimiter);
       const text = repos
         .slice(0, 10)
