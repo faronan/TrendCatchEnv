@@ -4,7 +4,8 @@ import { expressReceiver, githubTrendNotify } from "./slack/app";
 export const slack = functions.https.onRequest(expressReceiver.app);
 
 export const githubTrendSchedule = functions.pubsub
-  .schedule("every 24 hours")
+  .schedule("0 9 * * *")
+  .timeZone("Asia/Tokyo")
   .onRun((_) => {
     githubTrendNotify();
   });
